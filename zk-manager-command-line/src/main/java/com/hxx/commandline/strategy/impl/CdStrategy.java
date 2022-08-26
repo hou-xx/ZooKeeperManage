@@ -31,9 +31,10 @@ public enum CdStrategy implements CommandStrategy {
             System.out.println("The parameter is wrong, please confirm.");
             return;
         }
-        String currentFolders = FolderManager.concatFolders();
-        //TODO 处理目录切换
-
-
+        if (!zkClient.exists(FolderManager.concatFolders(command[1]))) {
+            System.out.println("The path is not exists, please confirm!");
+        }
+        String path = FolderManager.push(command[1]);
+        System.out.println(path);
     }
 }
