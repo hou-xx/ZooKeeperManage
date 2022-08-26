@@ -3,8 +3,7 @@ package com.hxx.commandline.folder;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Stack;
 
 /**
  * <ul>
@@ -13,7 +12,7 @@ import java.util.List;
  * </ul>
  */
 public class FolderManager {
-    private final static List<String> FOLDERS = new ArrayList<>();
+    private final static Stack<String> FOLDERS = new Stack<>();
 
     public static String concatFolders(String... paths) {
         StringBuilder ss = new StringBuilder();
@@ -41,7 +40,14 @@ public class FolderManager {
         if (StringUtils.isBlank(folder)) {
             return concatFolders();
         }
-        FOLDERS.add(folder);
+        FOLDERS.push(folder);
+        return concatFolders();
+    }
+
+    public static String pop() {
+        if (FOLDERS.size() > 0) {
+            FOLDERS.pop();
+        }
         return concatFolders();
     }
 

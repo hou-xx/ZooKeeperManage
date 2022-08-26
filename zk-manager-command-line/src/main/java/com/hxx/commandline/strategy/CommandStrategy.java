@@ -16,6 +16,6 @@ public interface CommandStrategy {
      * @param zkClient
      * @param command
      */
-    public void handle(ZkClient zkClient, String[] command);
+    public void handle(ZkClient zkClient, String... params);
 
 }

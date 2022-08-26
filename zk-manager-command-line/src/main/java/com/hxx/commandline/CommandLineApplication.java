@@ -1,13 +1,12 @@
 package com.hxx.commandline;
 
 import com.hxx.commandline.constant.ZkCommandLineConsts;
-import com.hxx.commandline.strategy.impl.CdStrategy;
+import com.hxx.commandline.strategy.AbstractStrategy;
+import com.hxx.commandline.strategy.StrategyManager;
 
 import org.I0Itec.zkclient.ZkClient;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -18,10 +17,9 @@ import java.util.Scanner;
  */
 public class CommandLineApplication {
 
-    private static List<String> folders = new ArrayList<>();
 
     public static void main(String[] args) {
-
+        System.out.println("Please enter command.");
         ZkClient zkClient = new ZkClient("");
 
         boolean flag = true;
@@ -36,11 +34,12 @@ public class CommandLineApplication {
                 continue;
             }
             String[] command = line.split(ZkCommandLineConsts.COMMAND_SEPARATOR);
-            if (StringUtils.equalsIgnoreCase("cd", command[0])) {
-                CdStrategy.ISNTANCE.handle(zkClient, command);
+            AbstractStrategy strategy = StrategyManager.getByCommand(command[0]);
+            if (null == strategy) {
+                System.out.println("Unsupported command.");
+                continue;
             }
-
-
+            strategy.handle(zkClient, command);
         }
 
 

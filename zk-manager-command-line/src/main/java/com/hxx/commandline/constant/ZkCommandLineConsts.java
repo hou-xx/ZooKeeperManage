@@ -11,5 +11,6 @@ public class ZkCommandLineConsts {
 
     public static String COMMAND_SEPARATOR = " ";
     public static String EXIT_COMMAND = "exit";
+    public static String CD_BACK = "..";
 
 }
